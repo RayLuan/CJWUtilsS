@@ -70,21 +70,21 @@ public extension QPUtils {
 	}
 
     class func isSMSRequestAvailable() -> Bool {
-        // TODO:是否能发送短信
-        let key = "SMSTime"
-        if let time = QPKeyChainUtils.stringForKey(key) {
-            let fmt = NSDateFormatter()
-            fmt.dateFormat = "yyyy-MM-dd HH:mm:ss"
-            let smsTime = fmt.dateFromString(time)
-            print("smsTime \(smsTime) \(NSDate())")
-            if smsTime?.minutesBeforeDate(NSDate()) >= 1 {
-                return true
-            }else{
-                return false
-            }
-        }else{
-            return true
-        }
+//        // TODO:是否能发送短信
+//        let key = "SMSTime"
+//        if let time = QPKeyChainUtils.stringForKey(key) {
+//            let fmt = NSDateFormatter()
+//            fmt.dateFormat = "yyyy-MM-dd HH:mm:ss"
+//            let smsTime = fmt.dateFromString(time)
+//            print("smsTime \(smsTime) \(NSDate())")
+//            if smsTime?.minutesBeforeDate(NSDate()) >= 1 {
+//                return true
+//            }else{
+//                return false
+//            }
+//        }else{
+//            return true
+//        }
     }
 
 	public class func updateSMSRequestTime() {
