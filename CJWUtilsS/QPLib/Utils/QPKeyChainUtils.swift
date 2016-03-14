@@ -56,15 +56,14 @@ public class QPKeyChainUtils: NSObject {
     }
     
     class func stringForKey(key:String) -> String?{
-        assertionFailure("library not been setup")
-//        let userDefault = NSUserDefaults.standardUserDefaults()
-//        let secretKey = (key as NSString).encryptToAESString()
-//        if let secretValue = userDefault.objectForKey(secretKey) as? String {
-//            let value = (secretValue as NSString).decryptAESString()
-//            return value
-//        }else{
-//            return nil
-//        }
+        let userDefault = NSUserDefaults.standardUserDefaults()
+        let secretKey = (key as NSString).encryptToAESString()
+        if let secretValue = userDefault.objectForKey(secretKey) as? String {
+            let value = (secretValue as NSString).decryptAESString()
+            return value
+        }else{
+            return nil
+        }
         return nil
     }
     
