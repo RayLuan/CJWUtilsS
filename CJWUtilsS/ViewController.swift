@@ -11,6 +11,7 @@ import SVProgressHUD
 import CoreData
 import ObjectiveC
 import Alamofire
+import WebViewJavascriptBridge
 
 class CJWoOBJ : NSObject {
 	var title = "String666"
@@ -58,6 +59,8 @@ class ViewController: UITableViewController {
 		}
 	}
 
+	let webView = UIWebView()
+
 	override func viewDidLoad() {
 //        self.pushViewController(self, animated: false)
 		super.viewDidLoad()
@@ -70,6 +73,13 @@ class ViewController: UITableViewController {
 		let req = Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: ["aasd": 123, "111": "ss"])
 
 		print("req \(req) \(req.0.URLString)")
+
+		QPHttpUtils.sharedInstance.newHttpRequest("http://www.cenjiawen.com/qian", param: ["ll": "xx"], expires: 25, success: { (response) -> () in
+			print("++\(response["content"].stringValue) ")
+			print("\(response) ")
+		}) { () -> () in
+			//
+		}
 
 		self.tableView.registerClass(CJWCell.self, forCellReuseIdentifier: "CJWCell")
 
@@ -100,7 +110,7 @@ class ViewController: UITableViewController {
 //		let ooo = CJWoOBJ()
 //        rfObject(anObject)
 
-//		http.newHttpRequest("http://115.29.141.172/qian/", param: nil, success: { (response) -> () in
+//		http.newHttpRequest("http: // 115.29.141.172/qian/", param: nil, success: { (response) -> () in
 //			print(response)
 //		}) { () -> () in
 //			//
@@ -136,6 +146,23 @@ class ViewController: UITableViewController {
 		if let value = QPKeyChainUtils.sharedInstance.cacheBy("cjw") {
 			print("value \(value)")
 		}
+
+		let wb = SecondeViewController()
+		// wb.url = "http://www.cenjiawen.com/qian"let path = NSBundle.mainBundle().pathForResource("attention2", ofType: "html")!
+		let path = NSBundle.mainBundle().pathForResource("ExampleApp", ofType: "html")!
+		do {
+			let html = try String(contentsOfFile: path, encoding: NSUTF8StringEncoding)
+//			wb.webView.loadHTMLString(html, baseURL: nil)
+			wb.html = html
+		}
+		catch let error as NSError {
+			fatalError(error.localizedDescription)
+		}
+
+//		self.presentViewController(wb, animated: true) { () -> Void in
+//			//
+//		}
+		self.view.showHUDTemporary("sdsds")
 	}
 
 	override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {

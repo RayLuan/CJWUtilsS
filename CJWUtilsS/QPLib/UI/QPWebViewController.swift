@@ -9,7 +9,7 @@
 import UIKit
 
 /// 简易web controller
-public class QPWebViewController: QPViewController {
+public class QPWebViewController: QPViewController, UIWebViewDelegate {
 
 	public let webView = UIWebView()
 
@@ -20,6 +20,7 @@ public class QPWebViewController: QPViewController {
 		super.viewDidLoad()
 		self.view.addSubview(webView)
 		webView.alignTop("0", leading: "0", bottom: "0", trailing: "0", toView: self.view)
+		webView.delegate = self
 
 		if !load(url) {
 			loadHtml(html)
@@ -63,5 +64,9 @@ public class QPWebViewController: QPViewController {
 			}
 		}
 		return false
+	}
+
+	public func webViewDidFinishLoad(webView: UIWebView) {
+		self.title = webView.stringByEvaluatingJavaScriptFromString("document.title")
 	}
 }
