@@ -48,30 +48,27 @@ public class QPKeyChainUtils: NSObject {
     }
     
     class func setString(value:String, forKey key:String){
-        assertionFailure("library not been setup")
-//        let userDefault = NSUserDefaults.standardUserDefaults()
-//        let secretKey = (key as NSString).encryptToAESString()
-//        let secretValue = (value as NSString).encryptToAESString()
-//        userDefault.setObject(secretValue, forKey: secretKey)
+        let userDefault = NSUserDefaults.standardUserDefaults()
+        let secretKey = key.encryptToAESString()
+        let secretValue = value.encryptToAESString()
+        userDefault.setObject(secretValue, forKey: secretKey)
     }
     
     class func stringForKey(key:String) -> String?{
         let userDefault = NSUserDefaults.standardUserDefaults()
-        let secretKey = (key as NSString).encryptToAESString()
+        let secretKey = key.encryptToAESString()
         if let secretValue = userDefault.objectForKey(secretKey) as? String {
-            let value = (secretValue as NSString).decryptAESString()
+            let value = secretValue.decryptAESString()
             return value
         }else{
             return nil
         }
-        return nil
     }
     
     class func removeKey(key:String){
-        assertionFailure("library not been setup")
-//        let secretKey = (key as NSString).encryptToAESString()
-//        let userDefault = NSUserDefaults.standardUserDefaults()
-//        userDefault.removeObjectForKey(secretKey)
+        let secretKey = key.encryptToAESString()
+        let userDefault = NSUserDefaults.standardUserDefaults()
+        userDefault.removeObjectForKey(secretKey)
     }
     
     class func removeAllItems(){

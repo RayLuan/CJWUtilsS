@@ -11,11 +11,14 @@ import SDWebImage
 import NSDate_TimeAgo
 import FLKAutoLayout
 import SwiftyJSON
+import CryptoSwift
 
 public let UIControlEventsTouchUpInside = UIControlEvents.TouchUpInside
 public let UIControlStateNormal = UIControlState.Normal
 public let UIControlStateSelected = UIControlState.Selected
 public let UIControlStateHighlighted = UIControlState.Highlighted
+public let ENCRYPT_KEY = "motherFucker"
+public let ENCRYPT_IV = "19910522"
 
 public typealias QPNormalBlock = () -> ()
 
@@ -772,4 +775,22 @@ public extension NSArray {
 		}
 		return ""
 	}
+}
+
+public extension String {
+    public func encryptToAESString() -> String{
+        return try! self.encrypt(AES(key: ENCRYPT_KEY, iv: ENCRYPT_IV))
+    }
+    
+    public func encryptToAESStringWithKey(key:String) -> String{
+        return try! self.encrypt(AES(key: key, iv: ENCRYPT_IV))
+    }
+    
+    public func decryptAESString() -> String{
+        return try! self.decrypt(AES(key: ENCRYPT_KEY, iv: ENCRYPT_IV))
+    }
+    
+    public func decryptAESStringWithKey(key:String) -> String{
+        return try! self.decrypt(AES(key: key, iv: ENCRYPT_IV))
+    }
 }
