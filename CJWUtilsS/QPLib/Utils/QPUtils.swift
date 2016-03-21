@@ -17,8 +17,8 @@ public let UIControlEventsTouchUpInside = UIControlEvents.TouchUpInside
 public let UIControlStateNormal = UIControlState.Normal
 public let UIControlStateSelected = UIControlState.Selected
 public let UIControlStateHighlighted = UIControlState.Highlighted
-public let ENCRYPT_KEY = "motherFucker"
-public let ENCRYPT_IV = "012345678901"
+public let ENCRYPT_KEY = "secret0key000000"
+public let ENCRYPT_IV = "0123456789012345"
 
 public typealias QPNormalBlock = () -> ()
 
