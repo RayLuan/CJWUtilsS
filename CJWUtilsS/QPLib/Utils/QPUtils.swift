@@ -18,7 +18,7 @@ public let UIControlStateNormal = UIControlState.Normal
 public let UIControlStateSelected = UIControlState.Selected
 public let UIControlStateHighlighted = UIControlState.Highlighted
 public let ENCRYPT_KEY = "motherFucker"
-public let ENCRYPT_IV = "19910522"
+public let ENCRYPT_IV = "012345678901"
 
 public typealias QPNormalBlock = () -> ()
 
