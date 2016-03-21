@@ -33,7 +33,7 @@ public class QPKeyChainUtils: NSObject {
 //        return SSKeychain.deletePasswordForService(service, account: key)
 //    }
     
-    class var sharedInstance : QPKeyChainUtils {
+    public class var sharedInstance : QPKeyChainUtils {
         struct Static {
             static var onceToken : dispatch_once_t = 0
             static var instance : QPKeyChainUtils? = nil
@@ -47,14 +47,14 @@ public class QPKeyChainUtils: NSObject {
     override init() {
     }
     
-    class func setString(value:String, forKey key:String){
+    public class func setString(value:String, forKey key:String){
         let userDefault = NSUserDefaults.standardUserDefaults()
         let secretKey = key.encryptToAESString()
         let secretValue = value.encryptToAESString()
         userDefault.setObject(secretValue, forKey: secretKey)
     }
     
-    class func stringForKey(key:String) -> String?{
+    public class func stringForKey(key:String) -> String?{
         let userDefault = NSUserDefaults.standardUserDefaults()
         let secretKey = key.encryptToAESString()
         if let secretValue = userDefault.objectForKey(secretKey) as? String {
@@ -65,13 +65,13 @@ public class QPKeyChainUtils: NSObject {
         }
     }
     
-    class func removeKey(key:String){
+    public class func removeKey(key:String){
         let secretKey = key.encryptToAESString()
         let userDefault = NSUserDefaults.standardUserDefaults()
         userDefault.removeObjectForKey(secretKey)
     }
     
-    class func removeAllItems(){
+    public class func removeAllItems(){
     }
 }
 
