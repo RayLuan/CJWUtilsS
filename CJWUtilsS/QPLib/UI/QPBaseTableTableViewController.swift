@@ -16,9 +16,9 @@ import DZNEmptyDataSet
 private let imageError = UIImage(named: "Cry") // UIImage(named: "Cry")
 private let imageLoading = UIImage(named: "Loading")
 
-let TIPS_LOADING = "加载中"// "加载中..."
-let TIPS_LOAD_FAIL = "加载失败"// "加载失败"
-let TIPS_TAP_RELOAD = "点击加载"// "点击重新加载"
+let TIPS_LOADING = "加载中" // "加载中..."
+let TIPS_LOAD_FAIL = "加载失败" // "加载失败"
+let TIPS_TAP_RELOAD = "点击加载" // "点击重新加载"
 let TIPS_NETWORK_EXCEPTION = "网络不是很给力,加载就失败了.."
 let TIPS_CLEANING_CACHE = "正在清除缓存,请稍候"
 
@@ -52,7 +52,7 @@ public class QPBaseTableViewController: UITableViewController {
 	private var statusDesciption = TIPS_TAP_RELOAD
 	private var statusImage = imageLoading
 
-	public var shouldHideNavigationBar : Bool = false
+	public var shouldHideNavigationBar: Bool = false
 
 	public override func viewWillAppear(animated: Bool) {
 
@@ -104,7 +104,7 @@ public class QPBaseTableViewController: UITableViewController {
 	}
 
 	override public func scrollViewDidScroll(scrollView: UIScrollView) {
-		self.view.endEditing(true)
+//		self.view.endEditing(true)
 	}
 
 	override public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -119,6 +119,13 @@ public class QPBaseTableViewController: UITableViewController {
 		return cellForRow(atIndexPath: indexPath)
 	}
 
+	/**
+	 新版版使用这个方法加载cell
+
+	 - parameter indexPath: indexPath
+
+	 - returns: UITableViewCell
+	 */
 	public func cellForRow(atIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 		return UITableViewCell()
 	}
@@ -132,17 +139,17 @@ public class QPBaseTableViewController: UITableViewController {
 	}
 }
 
-extension QPBaseTableViewController : DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
+extension QPBaseTableViewController: DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
 	public func imageForEmptyDataSet(scrollView: UIScrollView!) -> UIImage! {
 		return EmptyLoadingImage()
 	}
 
 	public func EmptyErrorImage() -> UIImage {
-		return UIImage()
+		return UIImage.fromColor()
 	}
 
 	public func EmptyLoadingImage() -> UIImage {
-		return UIImage()
+		return UIImage.fromColor()
 	}
 
 	public func titleForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString! {
@@ -161,10 +168,6 @@ extension QPBaseTableViewController : DZNEmptyDataSetSource, DZNEmptyDataSetDele
 
 	public func emptyDataSetDidTapView(scrollView: UIScrollView!) {
 		request()
-	}
-
-	public func tableViewLoading() {
-		setTableViewEmptyStatus(TIPS_TAP_RELOAD, description: nil, imageType: ImageType.Loading)
 	}
 
 	public func setTableViewEmptyStatus(tableView: UITableView, title: String, description: String?, imageType: ImageType?) {
@@ -192,23 +195,54 @@ extension QPBaseTableViewController : DZNEmptyDataSetSource, DZNEmptyDataSetDele
 		self.tableView.reloadEmptyDataSet()
 	}
 
+	/**
+	 隐藏空页面
+	 */
 	public func hideTableViewEmptyStatus() {
 		shouldShowEmptyStatus = false
 		self.tableView.reloadEmptyDataSet()
 	}
 
+	/**
+	 显示空页面
+	 */
 	public func showTableViewEmptyStatus() {
 		shouldShowEmptyStatus = true
 		self.tableView.reloadEmptyDataSet()
 	}
 
+	/**
+	 没有数据
+	 */
+	public func tableViewNoData() {
+		setTableViewEmptyStatus("没有数据", description: nil, imageType: ImageType.Loading)
+		self.tableView.hideHeader()
+		self.tableView.hideFooter()
+	}
+
+	/**
+	 加载中
+	 */
+	public func tableViewLoading() {
+		setTableViewEmptyStatus(TIPS_LOADING, description: nil, imageType: ImageType.Loading)
+		self.tableView.startLoadData()
+	}
+
+	/**
+	 加载失败
+	 */
 	public func tableViewLoadFail() {
 		statusImage = EmptyErrorImage()
 		setTableViewEmptyStatus(TIPS_LOAD_FAIL, description: TIPS_TAP_RELOAD, imageType: ImageType.Error)
+		self.tableView.noticeNoMoreData()
 	}
 
+	/**
+	 网络错误
+	 */
 	public func tableViewNetworkException() {
 		setTableViewEmptyStatus(TIPS_NETWORK_EXCEPTION, description: TIPS_TAP_RELOAD, imageType: ImageType.Error)
+		self.tableView.noticeNoMoreData()
 	}
 
 	public func offsetForEmptyDataSet(scrollView: UIScrollView!) -> CGPoint {

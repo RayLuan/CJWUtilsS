@@ -11,23 +11,20 @@ import SDWebImage
 import NSDate_TimeAgo
 import FLKAutoLayout
 import SwiftyJSON
-import CryptoSwift
 
 public let UIControlEventsTouchUpInside = UIControlEvents.TouchUpInside
 public let UIControlStateNormal = UIControlState.Normal
 public let UIControlStateSelected = UIControlState.Selected
 public let UIControlStateHighlighted = UIControlState.Highlighted
-public let ENCRYPT_KEY = "secret0key000000"
-public let ENCRYPT_IV = "0123456789012345"
 
 public typealias QPNormalBlock = () -> ()
 
 public class QPUtils: NSObject {
 
-	public class var sharedInstance : QPUtils {
+	public class var sharedInstance: QPUtils {
 		struct Static {
-			static var onceToken : dispatch_once_t = 0
-			static var instance : QPUtils? = nil
+			static var onceToken: dispatch_once_t = 0
+			static var instance: QPUtils? = nil
 		}
 		dispatch_once(&Static.onceToken) {
 			Static.instance = QPUtils()
@@ -73,8 +70,8 @@ public extension QPUtils {
 //        })
 	}
 
-    class func isSMSRequestAvailable() -> Bool {
-//        // TODO:是否能发送短信
+	class func isSMSRequestAvailable() -> Bool {
+		// TODO:是否能发送短信
 //        let key = "SMSTime"
 //        if let time = QPKeyChainUtils.stringForKey(key) {
 //            let fmt = NSDateFormatter()
@@ -87,9 +84,11 @@ public extension QPUtils {
 //                return false
 //            }
 //        }else{
-            return true
+//            return true
 //        }
-    }
+		assertionFailure("library not been setup")
+		return false
+	}
 
 	public class func updateSMSRequestTime() {
 		// TODO:还不能用
@@ -113,7 +112,7 @@ public extension String {
 		return 9999
 	}
 
-	private var MAX_WIDTH : CGFloat {
+	private var MAX_WIDTH: CGFloat {
 		return SCREEN_WIDTH
 	}
 
@@ -272,7 +271,7 @@ public extension NSDate {
 public typealias QPDelayBlock = () -> ()
 
 /// 延时执行
-public class QPExcuteDelay : NSObject {
+public class QPExcuteDelay: NSObject {
 
 	public class func excute(timeDelay: NSTimeInterval, block: QPDelayBlock) {
 		let ttt: Int64 = Int64(timeDelay)
@@ -419,7 +418,7 @@ public extension QPUtils {
 }
 
 public extension NSDictionary {
-	public var id : Int {
+	public var id: Int {
 		if let tmp = self["id"] as? Int {
 			return tmp
 		}
@@ -524,14 +523,14 @@ public extension UIView {
 	}
 }
 
-class QPCurrentCity : NSObject {
+class QPCurrentCity: NSObject {
 	// TODO: 获取当前城市
 	/// 获取当前城市
 
-	class var sharedInstance : QPCurrentCity {
+	class var sharedInstance: QPCurrentCity {
 		struct Static {
-			static var onceToken : dispatch_once_t = 0
-			static var instance : QPCurrentCity? = nil
+			static var onceToken: dispatch_once_t = 0
+			static var instance: QPCurrentCity? = nil
 		}
 		dispatch_once(&Static.onceToken) {
 			Static.instance = QPCurrentCity()
@@ -539,8 +538,8 @@ class QPCurrentCity : NSObject {
 		return Static.instance!
 	}
 
-	var gpsCity : String?
-	var citys : NSArray = NSArray()
+	var gpsCity: String?
+	var citys: NSArray = NSArray()
 
 	class func getCurrentCity() -> String {
 		if let city = getCurrentCityInfo() {
@@ -670,7 +669,7 @@ public extension UITextField {
 	}
 }
 public extension UITextField {
-	public var textValue : String {
+	public var textValue: String {
 		if let txt = text {
 			return txt
 		} else {
@@ -717,7 +716,7 @@ public extension String {
 }
 
 public extension UIButton {
-	public func addTarget(targte: AnyObject?, action : Selector) {
+	public func addTarget(targte: AnyObject?, action: Selector) {
 		self.addTarget(targte, action: action, forControlEvents: UIControlEvents.TouchUpInside)
 	}
 }
@@ -775,22 +774,4 @@ public extension NSArray {
 		}
 		return ""
 	}
-}
-
-public extension String {
-    public func encryptToAESString() -> String{
-        return try! self.encrypt(AES(key: ENCRYPT_KEY, iv: ENCRYPT_IV))
-    }
-    
-    public func encryptToAESStringWithKey(key:String) -> String{
-        return try! self.encrypt(AES(key: key, iv: ENCRYPT_IV))
-    }
-    
-    public func decryptAESString() -> String{
-        return try! self.decrypt(AES(key: ENCRYPT_KEY, iv: ENCRYPT_IV))
-    }
-    
-    public func decryptAESStringWithKey(key:String) -> String{
-        return try! self.decrypt(AES(key: key, iv: ENCRYPT_IV))
-    }
 }

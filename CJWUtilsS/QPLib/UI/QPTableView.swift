@@ -51,6 +51,30 @@ public extension UITableView {
 	public func hideFooter() {
 		self.refresFooter?.hidden = true
 	}
+
+	/**
+	 显示页脚没有更多数据
+	 */
+	@available( *, deprecated, message = "use noticeNoMoreData: instead", renamed = "noticeNoMoreData")
+	public func noticeNoData() {
+		self.refresFooter?.showNoData()
+	}
+
+	/**
+	 显示页脚没有更多数据
+	 */
+	public func noticeNoMoreData() {
+		self.refresFooter?.showNoData()
+	}
+
+	/**
+	 开始加载数据,显示页脚
+	 */
+	public func startLoadData() {
+		self.refresFooter?.resetNoData()
+		self.showHeader()
+		self.showFooter()
+	}
 }
 
 extension UITableView {
@@ -100,7 +124,7 @@ public extension UITableView {
 }
 
 public extension UITableView {
-	public var refreshHeader : MJRefreshHeader? {
+	public var refreshHeader: MJRefreshHeader? {
 		get {
 			return self.mj_header
 		}
@@ -110,7 +134,7 @@ public extension UITableView {
 		}
 	}
 
-	var refresFooter : MJRefreshFooter? {
+	var refresFooter: MJRefreshFooter? {
 		get {
 			return self.mj_footer
 		}
@@ -131,7 +155,7 @@ public extension MJRefreshFooter {
 	}
 }
 
-private class CJWRefreshHeader : MJRefreshGifHeader {
+private class CJWRefreshHeader: MJRefreshGifHeader {
 
 	let idle = "Idle"
 	let pulling = "Pulling"
