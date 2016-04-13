@@ -48,27 +48,27 @@ public class QPKeyChainUtils: NSObject {
     }
     
     public class func setString(value:String, forKey key:String){
-        let userDefault = NSUserDefaults.standardUserDefaults()
-        let secretKey = key.encryptToAESString()
-        let secretValue = value.encryptToAESString()
-        userDefault.setObject(secretValue, forKey: secretKey)
+//        let userDefault = NSUserDefaults.standardUserDefaults()
+//        let secretKey = key.encryptToAESString()
+//        let secretValue = value.encryptToAESString()
+//        userDefault.setObject(secretValue, forKey: secretKey)
     }
     
     public class func stringForKey(key:String) -> String?{
-        let userDefault = NSUserDefaults.standardUserDefaults()
-        let secretKey = key.encryptToAESString()
-        if let secretValue = userDefault.objectForKey(secretKey) as? String {
-            let value = secretValue.decryptAESString()
-            return value
-        }else{
+//        let userDefault = NSUserDefaults.standardUserDefaults()
+//        let secretKey = key.encryptToAESString()
+//        if let secretValue = userDefault.objectForKey(secretKey) as? String {
+//            let value = secretValue.decryptAESString()
+//            return value
+//        }else{
             return nil
-        }
+//        }
     }
     
     public class func removeKey(key:String){
-        let secretKey = key.encryptToAESString()
-        let userDefault = NSUserDefaults.standardUserDefaults()
-        userDefault.removeObjectForKey(secretKey)
+//        let secretKey = key.encryptToAESString()
+//        let userDefault = NSUserDefaults.standardUserDefaults()
+//        userDefault.removeObjectForKey(secretKey)
     }
     
     public class func removeAllItems(){
